@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navercorp.shopping.demo.product.mapper.ProductMapper">
+
+    <select id="selectAllProducts" resultType="Product">
+        SELECT product_id AS productId,
+               product_name AS productName,
+               product_price AS productPrice
+        FROM t_product
+        ORDER BY product_id ASC
+    </select>
+
+    <select id="selectProductById" parameterType="int" resultType="Product">
+        SELECT product_id AS productId,
+               product_name AS productName,
+               product_price AS productPrice
+        FROM t_product
+        WHERE product_id = #{productId}
+    </select>
+</mapper>

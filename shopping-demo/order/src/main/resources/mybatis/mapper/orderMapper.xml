@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navercorp.shopping.demo.order.mapper.OrderMapper">
+
+    <select id="selectOrder" parameterType="string" resultType="Order">
+        SELECT order_id AS orderId,
+               order_time AS orderTime,
+               payment_amount AS paymentAmount,
+               order_status AS orderStatus
+        FROM t_order
+        WHERE order_id = #{orderId}
+    </select>
+
+    <select id="selectOrderForUpdate" parameterType="string" resultType="Order">
+        SELECT order_id AS orderId,
+               order_time AS orderTime,
+               payment_amount AS paymentAmount,
+               order_status AS orderStatus
+        FROM t_order
+        WHERE order_id = #{orderId}
+        FOR UPDATE
+    </select>
+
+    <insert id="insertOrder" parameterType="Order">
+        INSERT INTO t_order (order_id, order_time, payment_amount, order_status)
+        VALUES (#{orderId}, #{orderTime}, #{paymentAmount}, #{orderStatus})
+    </insert>
+
+    <update id="updateOrderComplete" parameterType="string">
+        UPDATE t_order
+        SET order_status = 1
+        WHERE order_id = #{orderId}
+    </update>
+
+    <update id="updateOrderNotComplete">
+        UPDATE t_order
+        SET order_status = sleep(#{delay})
+        WHERE order_id = #{orderId}
+    </update>
+
+</mapper>
